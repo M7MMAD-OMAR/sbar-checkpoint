@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "mode": "repair",
+  "approval": "delegated",
+  "environment": "local-isolated",
+  "requirements": [
+    {"id": "R1", "text": "Implement the exact task acceptance contract"},
+    {"id": "R2", "text": "Exercise meaningful happy, failure and boundary cases"}
+  ],
+  "checkpoints": [
+    {
+      "id": "core",
+      "title": "Implement and verify the core contract",
+      "covers": ["R1", "R2"],
+      "depends_on": [],
+      "scope": ["*.py", "tests/**/*.py", "README.md"],
+      "gates": {
+        "behavior": {
+          "kind": "command",
+          "checks": [
+            {"id": "unit", "argv": ["python3", "-m", "unittest", "discover", "-s", "tests", "-v"], "parser": "unittest", "min_tests": 2, "timeout_seconds": 60, "max_attempts": 3}
+          ]
+        },
+        "review": {"kind": "review", "reviewers": 1, "axes": ["specification"]},
+        "ui": {"kind": "not_applicable", "reason": "Local backend fixture with no UI"}
+      }
+    }
+  ]
+}

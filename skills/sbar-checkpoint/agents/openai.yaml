@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sbar Checkpoint"
+  short_description: "Build in verified checkpoints with fresh evidence and review"
+  default_prompt: "Use $sbar-checkpoint to plan and complete this software task through verifiable checkpoints, respecting the existing authorization and project rules."
