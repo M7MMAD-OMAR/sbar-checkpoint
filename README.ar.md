@@ -47,7 +47,7 @@ python3 skills/sbar-checkpoint/scripts/install.py --host codex
 
 ## الاستخدام
 
-استدعِ `$sbar-checkpoint` في Codex أو `/sbar-checkpoint` في Claude Code وHermes التفاعلي. اذكر النتيجة المطلوبة والقيود والتفويض. المثال التالي قالب طلب بالإنجليزية:
+استدعِ `$sbar-checkpoint` في Codex أو `/sbar-checkpoint` في Claude Code وHermes التفاعلي. اذكر النتيجة المطلوبة والقيود والتفويض. المثال التالي قالب طلب بالعربية:
 
 ```text
 استخدم sbar-checkpoint لإصلاح تكرار تنفيذ الطلب في هذا المستودع.
