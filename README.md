@@ -1,5 +1,7 @@
 # Sbar Checkpoint
 
+[![Verify](https://github.com/M7MMAD-OMAR/sbar-checkpoint/actions/workflows/verify.yml/badge.svg)](https://github.com/M7MMAD-OMAR/sbar-checkpoint/actions/workflows/verify.yml)
+
 A skill for Codex, Claude Code, and Hermes Agent that turns substantial software work into dependency-aware checkpoints with verifiable evidence.
 
 A test result can become stale after a source change. A review can describe a different version of the implementation. A stopped command can leave its outcome uncertain. Sbar Checkpoint records planned checks, source and plan hashes, independent review reports, and checkpoint dependencies so an agent can tell what is currently proven and what needs another check.
@@ -26,6 +28,8 @@ python3 skills/sbar-checkpoint/scripts/install.py --host codex
 ```
 
 The bundled installer refuses an existing destination and does not change settings or install hooks. Its default user paths are `~/.codex/skills/sbar-checkpoint`, `~/.claude/skills/sbar-checkpoint`, and `~/.hermes/skills/sbar-checkpoint`. Host root overrides and project installation are documented in [getting started](docs/getting-started.md).
+
+Portable ZIP and `.skill` bundles are available in [Releases](https://github.com/M7MMAD-OMAR/sbar-checkpoint/releases). Each release includes SHA256 checksums.
 
 The engine requires Python 3.10+ on POSIX and has no third-party Python dependencies. Node.js is needed only for the optional `npx` installation route. Host authentication and tools remain the host's responsibility.
 
@@ -71,7 +75,7 @@ Audit and plan requests remain read-only under the skill contract. The engine ca
 
 The engine records and hashes UI artifacts. It does not judge pixels, accessibility, or appearance. Missing browser, image, or independent review tools leave the corresponding gate unproven.
 
-Linux is the tested engine platform. macOS needs platform-specific validation. Native Windows is unsupported; a POSIX environment such as WSL must keep the host and engine on the same filesystem. Workstation installation does not establish cloud-host execution or production-provider correctness.
+The engine CI matrix covers Python 3.10, 3.12 and 3.14 on Linux, and Python 3.12 on macOS. Check the linked workflow for current results. Native Windows is unsupported; a POSIX environment such as WSL must keep the host and engine on the same filesystem. Workstation installation does not establish cloud-host execution or production-provider correctness.
 
 Pause and timeout stop the owned check's process group. Deliberately detached sessions can escape it. Invocation tokens avoid replaying a completed check; they do not provide application-level idempotency for payments or external writes.
 

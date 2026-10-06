@@ -2,7 +2,7 @@
 
 ## Shared engine
 
-The local engine uses Python 3.10+ and the standard library on POSIX. Linux is tested. macOS uses the same APIs but requires testing on a Mac before claiming certification. Windows requires a POSIX environment such as WSL, with the host and Python operating on the same filesystem; native Windows is unsupported. Agent host compatibility is separate from OS support.
+The local engine uses Python 3.10+ and the standard library on POSIX. Engine CI runs on Linux with Python 3.10, 3.12 and 3.14, and on macOS with Python 3.12. These checks exercise the engine and fixtures, not authenticated host providers. Windows requires a POSIX environment such as WSL, with the host and Python operating on the same filesystem; native Windows is unsupported. Agent host compatibility is separate from OS support.
 
 Use the common SKILL.md, plans and report schemas in all three hosts. Read only [Codex](host-codex.md), [Claude Code](host-claude.md) or [Hermes](host-hermes.md). No global hooks, auto-continuation loop, credentials or provider-specific model is installed. `doctor.py` observes paths and executable presence, not authentication, model quality, tool permission or successful discovery.
 
