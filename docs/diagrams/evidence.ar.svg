@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 642" role="img" aria-labelledby="title desc">
+<title id="title">الدليل مرتبط بنسخة محددة</title><desc id="desc">تربط هويات الخطة والمصدر والملفات تقارير السلوك والمراجعة والواجهة. تغير المصدر أو الأدلة يبطل الإثبات. أسماء المراجعين ليست مصادقة.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10Z" fill="#718096" /></marker></defs>
+<rect width="1200" height="642" rx="24" fill="#f6f8fc" />
+<g font-family="Arial,Helvetica,sans-serif">
+<text x="52" y="55" font-size="13" font-weight="700" letter-spacing="2" fill="#245ce3">SBAR CHECKPOINT</text>
+<text x="1148" y="103" font-size="32" font-weight="700" fill="#142338" direction="rtl">الدليل مرتبط بنسخة محددة</text>
+<text x="1148" y="137" font-size="17" font-weight="400" fill="#526176" direction="rtl">تكون نتيجة النجاح صالحة ما دامت مدخلاتها هي الحالية.</text>
+<rect x="52" y="184" width="354" height="126" rx="14" fill="white" stroke="#cbd5e2" />
+<text x="386.0" y="220" font-size="21" font-weight="700" fill="#142338" direction="rtl">هوية الخطة</text>
+<text x="386.0" y="251" font-size="15" font-weight="400" fill="#526176" direction="rtl">المتطلبات والنطاقات</text>
+<text x="386.0" y="275" font-size="15" font-weight="400" fill="#526176" direction="rtl">إعدادات البوابات</text>
+<rect x="423" y="184" width="354" height="126" rx="14" fill="white" stroke="#cbd5e2" />
+<text x="757.0" y="220" font-size="21" font-weight="700" fill="#142338" direction="rtl">هوية المصدر</text>
+<text x="757.0" y="251" font-size="15" font-weight="400" fill="#526176" direction="rtl">الملفات والاختبارات المحددة</text>
+<text x="757.0" y="275" font-size="15" font-weight="400" fill="#526176" direction="rtl">نطاقات المراحل السابقة</text>
+<rect x="794" y="184" width="354" height="126" rx="14" fill="white" stroke="#cbd5e2" />
+<text x="1128.0" y="220" font-size="21" font-weight="700" fill="#142338" direction="rtl">هوية الأدلة</text>
+<text x="1128.0" y="251" font-size="15" font-weight="400" fill="#526176" direction="rtl">السجلات والتقارير المحفوظة</text>
+<text x="1128.0" y="275" font-size="15" font-weight="400" fill="#526176" direction="rtl">المرجع وصور الواجهة</text>
+<path d="M229 312 V338 H600 V355" fill="none" stroke="#718096" stroke-width="2" marker-end="url(#arrow)" />
+<path d="M600 312 V338 H600 V355" fill="none" stroke="#718096" stroke-width="2" marker-end="url(#arrow)" />
+<path d="M971 312 V338 H600 V355" fill="none" stroke="#718096" stroke-width="2" marker-end="url(#arrow)" />
+<rect x="352" y="357" width="496" height="111" rx="14" fill="#245ce3" stroke="#245ce3" />
+<text x="828.0" y="393" font-size="21" font-weight="700" fill="white" direction="rtl">بوابة الإثبات</text>
+<text x="828.0" y="424" font-size="15" font-weight="400" fill="#e1eaff" direction="rtl">نجاح السلوك ومراجعة مستقلة للنسخة الحالية.</text>
+<text x="828.0" y="448" font-size="15" font-weight="400" fill="#e1eaff" direction="rtl">تطابق أدلة الواجهة وحل الملاحظات المطلوبة.</text>
+<path d="M600 470 V490" fill="none" stroke="#718096" stroke-width="2" marker-end="url(#arrow)" />
+<text x="600" y="520" font-size="22" font-weight="700" fill="#142338" text-anchor="middle" direction="rtl">اعتماد المرحلة</text>
+<path d="M52 555 H1148" stroke="#dbe2ec" />
+<text x="1148" y="589" font-size="16" font-weight="700" fill="#245ce3" direction="rtl">تغير المدخلات: جدد الفحوص والمراجعات المتأثرة.</text>
+<text x="1148" y="615" font-size="15" font-weight="400" fill="#526176" direction="rtl">تتحقق البصمات من الاتساق. تبقى هوية المراجع والصلاحيات مسؤولية المضيف.</text>
+</g>
+</svg>

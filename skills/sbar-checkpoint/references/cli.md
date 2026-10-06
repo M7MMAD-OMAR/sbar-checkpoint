@@ -1,5 +1,7 @@
 # Engine CLI
 
+English | [العربية](cli.ar.md)
+
 The engine requires Python 3.10 or newer and POSIX process groups and advisory file locks. It uses only the standard library. Commands run from the project directory using the exact planned argv. No shell is inserted by the engine. The plan itself is trusted executable input: an argv can explicitly invoke a shell or a network tool. This is not an operating system sandbox.
 
 ## Commands

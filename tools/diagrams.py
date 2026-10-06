@@ -1,6 +1,7 @@
 """Generate the editable workflow and evidence SVGs used in the public guide."""
 from pathlib import Path
 from html import escape
+import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1] / 'docs/diagrams'
 INK, MUTED, BLUE, LINE = '#142338', '#526176', '#245ce3', '#cbd5e2'
@@ -80,8 +81,67 @@ def evidence():
     return '\n'.join(out) + '\n'
 
 
+def arabic(svg, translations, kind):
+    """Localize visible labels while preserving the numbered diagram topology."""
+    ET.register_namespace('', 'http://www.w3.org/2000/svg')
+    root = ET.fromstring(svg)
+    for element in root.iter():
+        if element.text in translations:
+            element.text = translations[element.text]
+        if element.tag.endswith('}text') and element.text != 'SBAR CHECKPOINT':
+            x, y = float(element.get('x')), float(element.get('y'))
+            if kind == 'workflow' and 192 <= y <= 364:
+                x += 162
+            elif kind == 'evidence' and 184 <= y <= 310:
+                x += 314
+            elif kind == 'evidence' and 357 <= y <= 468:
+                x += 456
+            elif kind == 'evidence' and y == 520:
+                x = 600
+                element.set('text-anchor', 'middle')
+            elif kind == 'workflow' and y == 409:
+                x = 775
+            elif kind == 'workflow' and y == 502:
+                x = 620 if x == 52 else 1148
+            else:
+                x = 1148
+            element.set('x', str(x))
+            element.set('direction', 'rtl')
+    return ET.tostring(root, encoding='unicode') + '\n'
+
+
+WORKFLOW_AR = {
+    'From request to accepted outcome': 'من الطلب إلى نتيجة معتمدة',
+    'Contract, plan, implement, verify and accept. Failed or stale evidence returns to implementation and verification. Pause preserves the run.': 'تحديد المتطلبات ثم التخطيط والتنفيذ والتحقق والاعتماد. يعيد الدليل الفاشل أو القديم العمل إلى التنفيذ والتحقق. يحفظ التوقف سجل التشغيل.',
+    'Small outcomes. Planned checks. Fresh review. Explicit acceptance.': 'نتائج صغيرة. فحوص مخططة. مراجعة جديدة. اعتماد واضح.',
+    'Contract': 'المتطلبات', 'Requirements': 'نتيجة مطلوبة', 'Scope and authority': 'نطاق وتفويض',
+    'Plan': 'التخطيط', 'Dependencies': 'اعتماد المراحل', 'Checks and gates': 'فحوص وبوابات',
+    'Implement': 'التنفيذ', 'One ready stage': 'مرحلة جاهزة واحدة', 'Preserve existing work': 'حفظ العمل الموجود',
+    'Verify': 'التحقق', 'Run real checks': 'تنفيذ الفحوص فعليًا', 'Fresh reviewer': 'مراجع بسياق جديد',
+    'Accept': 'الاعتماد', 'All gates current': 'كل الأدلة حالية', 'Unlock dependents': 'فتح المراحل التابعة',
+    'Repair or refresh': 'إصلاح أو تجديد الأدلة',
+    'Pause / resume preserves the plan, journal and evidence.': 'يحفظ التوقف والاستئناف الخطة والسجل والأدلة.',
+    'Accepted locally does not mean deployed.': 'الاعتماد المحلي لا يعني النشر.'
+}
+EVIDENCE_AR = {
+    'Evidence belongs to a specific version': 'الدليل مرتبط بنسخة محددة',
+    'Plan, source and artifact identities bind behavior, review and UI reports. Source or artifact changes invalidate proof. Actor labels are not authentication.': 'تربط هويات الخطة والمصدر والملفات تقارير السلوك والمراجعة والواجهة. تغير المصدر أو الأدلة يبطل الإثبات. أسماء المراجعين ليست مصادقة.',
+    'A passing result is useful only while its inputs remain current.': 'تكون نتيجة النجاح صالحة ما دامت مدخلاتها هي الحالية.',
+    'Plan identity': 'هوية الخطة', 'Requirements, scopes': 'المتطلبات والنطاقات', 'Gate configuration': 'إعدادات البوابات',
+    'Source identity': 'هوية المصدر', 'Declared files and tests': 'الملفات والاختبارات المحددة', 'Ancestor scopes': 'نطاقات المراحل السابقة',
+    'Artifact identity': 'هوية الأدلة', 'Captured logs and reports': 'السجلات والتقارير المحفوظة', 'Reference and UI captures': 'المرجع وصور الواجهة',
+    'Proof gate': 'بوابة الإثبات', 'Behavior passes. Independent review is current.': 'نجاح السلوك ومراجعة مستقلة للنسخة الحالية.',
+    'Required UI evidence matches. Findings are resolved.': 'تطابق أدلة الواجهة وحل الملاحظات المطلوبة.',
+    'Accept the checkpoint': 'اعتماد المرحلة',
+    'Changed inputs: refresh affected checks and reviews.': 'تغير المدخلات: جدد الفحوص والمراجعات المتأثرة.',
+    'Hashes check consistency. Reviewer identity and permissions remain host responsibilities.': 'تتحقق البصمات من الاتساق. تبقى هوية المراجع والصلاحيات مسؤولية المضيف.'
+}
+
+
 if __name__ == '__main__':
     ROOT.mkdir(parents=True, exist_ok=True)
     (ROOT / 'workflow.svg').write_text(workflow())
     (ROOT / 'evidence.svg').write_text(evidence())
-    print('Generated workflow.svg and evidence.svg')
+    (ROOT / 'workflow.ar.svg').write_text(arabic(workflow(), WORKFLOW_AR, 'workflow'))
+    (ROOT / 'evidence.ar.svg').write_text(arabic(evidence(), EVIDENCE_AR, 'evidence'))
+    print('Generated English and Arabic workflow and evidence diagrams')

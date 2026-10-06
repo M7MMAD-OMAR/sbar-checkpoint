@@ -1,5 +1,7 @@
 # Contributing
 
+Language: [English](CONTRIBUTING.md) | [العربية](CONTRIBUTING.ar.md)
+
 Report a reproducible issue with the host, Python version, operating system,
 expected behavior and actual command result. Remove credentials, project data
 and private paths from logs before attaching them.

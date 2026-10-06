@@ -1,5 +1,7 @@
 # Getting started
 
+Language: [English](getting-started.md) | [العربية](getting-started.ar.md)
+
 Sbar Checkpoint has two entry points: invoke the skill through your agent host, or run its local engine directly. The host does implementation, independent review, and any browser or image work. The engine records evidence and validates transitions.
 
 ## Install for your host

@@ -1,5 +1,7 @@
 # Sbar Checkpoint
 
+Language: [English](README.md) | [العربية](README.ar.md)
+
 [![Verify](https://github.com/M7MMAD-OMAR/sbar-checkpoint/actions/workflows/verify.yml/badge.svg)](https://github.com/M7MMAD-OMAR/sbar-checkpoint/actions/workflows/verify.yml)
 
 A skill for Codex, Claude Code, and Hermes Agent that turns substantial software work into dependency-aware checkpoints with verifiable evidence.
@@ -80,6 +82,8 @@ The engine CI matrix covers Python 3.10, 3.12 and 3.14 on Linux, and Python 3.12
 Pause and timeout stop the owned check's process group. Deliberately detached sessions can escape it. Invocation tokens avoid replaying a completed check; they do not provide application-level idempotency for payments or external writes.
 
 ## Reference and development
+
+- [Verification and host trials](docs/validation.md)
 
 - [Skill instructions](skills/sbar-checkpoint/SKILL.md)
 - [Engine CLI and schemas](skills/sbar-checkpoint/references/cli.md)

@@ -1,4 +1,10 @@
+<div dir="rtl">
+
 # دليل الاستخدام
+
+اللغة: [العربية](usage-ar.md) | [English getting started](getting-started.md)
+
+[الصفحة الرئيسية بالعربية](../README.ar.md) | [دليل البداية الكامل بالعربية](getting-started.ar.md)
 
 تساعد مهارة Sbar Checkpoint على تقسيم إصلاح أو ميزة أو ترحيل كبير إلى مراحل لها متطلبات وفحوص ومراجعة مستقلة. تربط الأدلة بنسخة المصدر والخطة، حتى لا يُعتمد فحص قديم بعد تغيير الملفات المؤثرة.
 
@@ -8,11 +14,17 @@
 
 لتثبيت المهارة للمستخدم في Codex وClaude Code وHermes Agent عبر Skills CLI:
 
+<div dir="ltr">
+
 ```sh
 npx skills add M7MMAD-OMAR/sbar-checkpoint --skill sbar-checkpoint -a codex claude-code hermes-agent -g
 ```
 
+</div>
+
 أو انسخ المستودع واستخدم المثبت المرفق، الذي يدعم Hermes أيضًا:
+
+<div dir="ltr">
 
 ```sh
 git clone https://github.com/M7MMAD-OMAR/sbar-checkpoint.git
@@ -20,6 +32,8 @@ cd sbar-checkpoint
 python3 skills/sbar-checkpoint/scripts/hosts.py paths --host all
 python3 skills/sbar-checkpoint/scripts/install.py --host codex
 ```
+
+</div>
 
 اختر `--host claude` أو `--host hermes` بدل Codex عند الحاجة. يرفض المثبت استبدال مجلد أو رابط موجود، ولا يغير الإعدادات أو يثبت hooks. راجع النسخة الموجودة واحفظ تعديلاتك قبل تحديثها.
 
@@ -33,10 +47,14 @@ python3 skills/sbar-checkpoint/scripts/install.py --host codex
 
 يمكن التثبيت داخل مشروع محدد:
 
+<div dir="ltr">
+
 ```sh
 python3 skills/sbar-checkpoint/scripts/install.py \
   --host codex --scope project --project /absolute/path/to/project
 ```
+
+</div>
 
 يستخدم Codex مجلد `.agents/skills`، وClaude Code مجلد `.claude/skills`، وHermes مجلد `.hermes/skills`. اكتشاف مهارات مشروع Hermes يحتاج جذر Git موثوقًا. تثبيت مجلد محلي لا يثبت تشغيل المهارة على مضيف سحابي.
 
@@ -46,9 +64,13 @@ python3 skills/sbar-checkpoint/scripts/install.py \
 
 في Hermes دون واجهة تفاعلية استخدم التحميل الصريح:
 
+<div dir="ltr">
+
 ```sh
 hermes chat --oneshot --skills sbar-checkpoint --query-file prompt.txt
 ```
+
+</div>
 
 تمرير أمر يبدأ بشرطة مائلة داخل نص الاستعلام لا يضمن تفسيره كأمر مهارة. لا يهيئ المحرك مزود النماذج أو بيانات الدخول، ولا يحتاج شبكة لتسجيل الحالة والتحقق منها.
 
@@ -129,12 +151,16 @@ hermes chat --oneshot --skills sbar-checkpoint --query-file prompt.txt
 
 أوامر المحرك، بعد استبدال `ENGINE` و`RUN` بمساراتهما الفعلية:
 
+<div dir="ltr">
+
 ```text
 python3 ENGINE pause --run RUN --reason 'User requested a pause'
 python3 ENGINE export --run RUN
 python3 ENGINE resume --run RUN
 python3 ENGINE status --run RUN
 ```
+
+</div>
 
 نفذ `resume` فقط بعد طلب المستخدم الاستئناف. يوقف المشغل مجموعة عمليات الفحص التي يملكها عند التوقف أو انتهاء المهلة. العمليات التي تنشئ جلسة منفصلة عمدًا قد تتجاوز هذا الحد. لا تستخدم فحصًا لإطلاق خدمة مشتركة طويلة العمر.
 
@@ -150,16 +176,22 @@ python3 ENGINE status --run RUN
 
 ## المراجع
 
-- [خطوات البداية وتجربة محلية كاملة](getting-started.md)
-- [مرجع الأوامر وصيغ الخطط والتقارير](../skills/sbar-checkpoint/references/cli.md)
-- [المضيفون والمسارات والانتقال بينهم](../skills/sbar-checkpoint/references/hosts.md)
+- [خطوات البداية وتجربة محلية كاملة](getting-started.ar.md)
+- [مرجع الأوامر وصيغ الخطط والتقارير بالعربية](../skills/sbar-checkpoint/references/cli.ar.md)
+- [المضيفون والمسارات والانتقال بينهم، بالإنجليزية](../skills/sbar-checkpoint/references/hosts.md)
 - [قالب خطة](../skills/sbar-checkpoint/references/example-plan.json)
-- [متطلبات البوابات](../skills/sbar-checkpoint/references/gates.md)
+- [متطلبات البوابات، بالإنجليزية](../skills/sbar-checkpoint/references/gates.md)
 
 لتشغيل اختبارات المستودع من جذره:
+
+<div dir="ltr">
 
 ```sh
 python3 -B -m unittest discover -s tests -v
 ```
 
+</div>
+
 الترخيص: [MIT](../LICENSE).
+
+</div>

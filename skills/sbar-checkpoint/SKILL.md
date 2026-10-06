@@ -4,14 +4,14 @@ license: MIT
 description: Build, repair, migrate or audit substantial software through dependency-aware checkpoints with source-bound test evidence, independent review, explicit authorization and safe pause/resume. Use for multi-stage features, tenant permissions, financial or offline correctness, migrations, risky cross-file repairs, and requests for structured agent workflows or checkpoint gates. Apply when these needs are present even without naming this skill. Keep tiny reversible edits on a direct verification path. Plan and audit requests remain read-only.
 compatibility: Codex, Claude Code and Hermes Agent with Python 3.10+ on POSIX. Independent agent tools or a fresh host process for verified review. Browser and image tools only for UI gates. Local engine has no network dependency or global hooks.
 metadata:
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 # Sbar Checkpoint
 
 Turn a substantial request into small, verifiable results. Use the bundled engine for transitions and evidence; a status file or an agent's confident summary cannot replace verification. The same plan and evidence format works across supported hosts.
 
-Arabic usage guide: [usage-ar.md](references/usage-ar.md).
+Arabic usage guide: [usage-ar.md](references/usage-ar.md). CLI reference: [English](references/cli.md) | [العربية](references/cli.ar.md).
 
 ## Select the current host
 
