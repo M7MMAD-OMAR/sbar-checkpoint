@@ -60,7 +60,7 @@ class ToolTests(unittest.TestCase):
 
     def test_install_preserves_every_byte_and_does_not_overwrite(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             source = self.make_skill(root / 'source')
             destination = root / 'installed'
             installer = module('install')
@@ -75,7 +75,7 @@ class ToolTests(unittest.TestCase):
 
     def test_install_rejects_broken_destination_symlink(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             source = self.make_skill(root / 'source')
             destination = root / 'installed'
             destination.symlink_to(root / 'missing')
@@ -85,7 +85,7 @@ class ToolTests(unittest.TestCase):
 
     def test_install_rejects_source_symlink_before_copy(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             source = self.make_skill(root / 'source')
             (source / 'alias').symlink_to(source / 'SKILL.md')
             destination = root / 'installed'
@@ -95,14 +95,14 @@ class ToolTests(unittest.TestCase):
 
     def test_install_rejects_destination_inside_source(self):
         with tempfile.TemporaryDirectory() as directory:
-            source = self.make_skill(Path(directory) / 'source')
+            source = self.make_skill(Path(directory).resolve() / 'source')
             with self.assertRaises(ValueError):
                 module('install').install(source, source / 'nested')
             self.assertFalse((source / 'nested').exists())
 
     def test_install_rejects_symlinked_parent_into_source(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             source = self.make_skill(root / 'source')
             alias = root / 'alias'
             alias.symlink_to(source, target_is_directory=True)
@@ -116,7 +116,7 @@ class ToolTests(unittest.TestCase):
 
     def test_receipt_collision_stops_before_installation(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             source = self.make_skill(root / 'source')
             receipt = root / 'receipt.json'
             receipt.write_text('keep')
@@ -127,7 +127,7 @@ class ToolTests(unittest.TestCase):
 
     def test_receipt_equal_destination_rejects_before_installation(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             source = self.make_skill(root / 'source')
             destination = root / 'installed'
             proc = subprocess.run([sys.executable, str(SCRIPTS / 'install.py'), '--source', str(source), '--destination', str(destination), '--receipt', str(destination)], capture_output=True, text=True)
@@ -137,7 +137,7 @@ class ToolTests(unittest.TestCase):
 
     def test_install_success_produces_valid_matching_receipt(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             source = self.make_skill(root / 'source')
             destination = root / 'installed'
             receipt = root / 'receipt.json'
@@ -148,7 +148,7 @@ class ToolTests(unittest.TestCase):
 
     def test_install_failure_removes_own_reserved_receipt(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             source = self.make_skill(root / 'source')
             destination = root / 'already-exists'
             destination.mkdir()
@@ -160,7 +160,7 @@ class ToolTests(unittest.TestCase):
 
     def receipt_fault(self, failure, destination_exists=False):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             source = self.make_skill(root / 'source')
             destination = root / 'installed'
             if destination_exists:

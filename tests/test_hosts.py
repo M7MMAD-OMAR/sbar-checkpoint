@@ -40,7 +40,7 @@ def isolated_env(home):
 class HostPathTests(unittest.TestCase):
     def test_user_defaults_for_each_host(self):
         with tempfile.TemporaryDirectory() as directory:
-            home = Path(directory)
+            home = Path(directory).resolve()
             for host, folder in USER_FOLDERS.items():
                 with self.subTest(host=host):
                     actual = hosts_module().resolve_destination(host, home=home, environ={})
@@ -48,7 +48,7 @@ class HostPathTests(unittest.TestCase):
 
     def test_explicit_home_does_not_inherit_machine_host_overrides(self):
         with tempfile.TemporaryDirectory() as directory:
-            home = Path(directory)
+            home = Path(directory).resolve()
             overrides = {variable: str(home / 'wrong' / host) for host, variable in ROOT_VARIABLES.items()}
             with mock.patch.dict(os.environ, overrides):
                 for host, folder in USER_FOLDERS.items():
@@ -57,7 +57,7 @@ class HostPathTests(unittest.TestCase):
 
     def test_absolute_environment_roots_are_respected(self):
         with tempfile.TemporaryDirectory() as directory:
-            home = Path(directory)
+            home = Path(directory).resolve()
             for host, variable in ROOT_VARIABLES.items():
                 with self.subTest(host=host):
                     selected = home / 'custom' / host
@@ -66,7 +66,7 @@ class HostPathTests(unittest.TestCase):
 
     def test_tilde_environment_roots_use_explicit_fixture_home(self):
         with tempfile.TemporaryDirectory() as directory:
-            home = Path(directory)
+            home = Path(directory).resolve()
             for host, variable in ROOT_VARIABLES.items():
                 with self.subTest(host=host):
                     result = hosts_module().resolve_destination(host, home=home, environ={variable: '~/custom/' + host})
@@ -77,11 +77,11 @@ class HostPathTests(unittest.TestCase):
             for host, variable in ROOT_VARIABLES.items():
                 with self.subTest(host=host):
                     with self.assertRaises(ValueError):
-                        hosts_module().resolve_destination(host, home=Path(directory), environ={variable: 'relative/config'})
+                        hosts_module().resolve_destination(host, home=Path(directory).resolve(), environ={variable: 'relative/config'})
 
     def test_project_scope_ignores_user_root_overrides(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             project = root / 'project'
             project.mkdir()
             overrides = {variable: str(root / 'unwanted' / host) for host, variable in ROOT_VARIABLES.items()}
@@ -93,7 +93,7 @@ class HostPathTests(unittest.TestCase):
 
     def test_project_scope_requires_an_existing_directory(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             file_path = root / 'file'
             file_path.write_text('keep')
             for project in (None, root / 'missing', file_path):
@@ -105,7 +105,7 @@ class HostPathTests(unittest.TestCase):
 
     def test_all_host_paths_cli_is_read_only_and_uses_supplied_home(self):
         with tempfile.TemporaryDirectory() as directory:
-            home = Path(directory)
+            home = Path(directory).resolve()
             env = isolated_env(home)
             for host, variable in ROOT_VARIABLES.items():
                 env[variable] = str(home / 'wrong' / host)
@@ -125,7 +125,7 @@ class HostPathTests(unittest.TestCase):
             for kwargs in ({'host': 'unsupported'}, {'host': 'codex', 'scope': 'global'}):
                 with self.subTest(kwargs=kwargs):
                     with self.assertRaises(ValueError):
-                        hosts_module().resolve_destination(home=Path(directory), environ={}, **kwargs)
+                        hosts_module().resolve_destination(home=Path(directory).resolve(), environ={}, **kwargs)
 
 
 
@@ -135,7 +135,7 @@ class HostInstallTests(unittest.TestCase):
 
     def test_all_three_user_installs_contain_runnable_engine(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             for host, folder in USER_FOLDERS.items():
                 with self.subTest(host=host):
                     proc = self.invoke(root, '--host', host)
@@ -150,7 +150,7 @@ class HostInstallTests(unittest.TestCase):
 
     def test_all_three_project_installs_respect_scope(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             project = root / 'project'
             project.mkdir()
             env = isolated_env(root)
@@ -165,7 +165,7 @@ class HostInstallTests(unittest.TestCase):
 
     def test_relative_override_fails_without_installing_in_cwd(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             for host, variable in ROOT_VARIABLES.items():
                 with self.subTest(host=host):
                     env = isolated_env(root)
@@ -177,7 +177,7 @@ class HostInstallTests(unittest.TestCase):
 
     def test_host_destination_collision_preserves_existing_files(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             for host, folder in USER_FOLDERS.items():
                 with self.subTest(host=host):
                     target = root / folder / 'skills' / SLUG
@@ -191,7 +191,7 @@ class HostInstallTests(unittest.TestCase):
 
     def test_broken_native_skill_symlink_is_preserved(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             for host, folder in USER_FOLDERS.items():
                 with self.subTest(host=host):
                     target = root / folder / 'skills' / SLUG
@@ -205,7 +205,7 @@ class HostInstallTests(unittest.TestCase):
 
     def test_explicit_host_and_destination_are_mutually_exclusive(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             proc = self.invoke(root, '--host', 'hermes', '--destination', root / 'custom')
             self.assertNotEqual(proc.returncode, 0)
             self.assertFalse((root / 'custom').exists())
@@ -213,14 +213,14 @@ class HostInstallTests(unittest.TestCase):
 
     def test_project_scope_missing_project_fails_without_side_effect(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             proc = self.invoke(root, '--host', 'codex', '--scope', 'project')
             self.assertNotEqual(proc.returncode, 0)
             self.assertEqual(list(root.iterdir()), [])
 
     def test_user_override_cli_selects_only_requested_root(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             for host, variable in ROOT_VARIABLES.items():
                 with self.subTest(host=host):
                     custom = root / 'custom' / host
@@ -235,7 +235,7 @@ class HostInstallTests(unittest.TestCase):
 class HostDoctorTests(unittest.TestCase):
     def test_presence_does_not_become_a_host_verification_claim(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             for host, folder in USER_FOLDERS.items():
                 with self.subTest(host=host):
                     target = root / folder / 'skills' / SLUG
@@ -262,7 +262,7 @@ class ReviewPacketTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
-        self.root = Path(self.temp.name)
+        self.root = Path(self.temp.name).resolve()
         self.project = self.root / 'project'
         self.project.mkdir()
         (self.project / 'app.py').write_text('result = 1\n')
